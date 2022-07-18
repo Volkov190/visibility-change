@@ -1,19 +1,11 @@
-function isVisiblePromise(): Promise<{
-  result: boolean;
-  listener: (this: Document, ev: Event) => any;
-}> {
+export function visibilityChange(): Promise<boolean> {
   return new Promise(function (resolve) {
     const listener = () => {
-      resolve({ result: !document.hidden, listener });
+      resolve(!document.hidden);
+      document.removeEventListener("visibilitychange", listener);
     };
     document.addEventListener("visibilitychange", listener);
   });
-}
-
-export async function visibilityChange() {
-  const result = await isVisiblePromise();
-  document.removeEventListener("visibilitychange", result.listener);
-  return result.result;
 }
 
 export async function visible() {
