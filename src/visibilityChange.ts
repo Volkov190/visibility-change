@@ -10,7 +10,7 @@ function isVisiblePromise(): Promise<{
   });
 }
 
-export default async function visibilityChange() {
+export async function visibilityChange() {
   const result = await isVisiblePromise();
   document.removeEventListener("visibilitychange", result.listener);
   return result.result;

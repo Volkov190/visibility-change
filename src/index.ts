@@ -1,2 +1,5 @@
-export { visible, hidden } from "./visibilityChange";
-export { default } from "./visibilityChange";
+export {
+  visibilityChange as default,
+  visible,
+  hidden,
+} from "./visibilityChange";
