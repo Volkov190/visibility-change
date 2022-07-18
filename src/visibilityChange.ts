@@ -1,5 +1,13 @@
+function hiddenIfDocExist() {
+  if (typeof document === "undefined") return true;
+  else return document.hidden;
+}
+
 export function visibilityChange(): Promise<boolean> {
   return new Promise(function (resolve) {
+    if (typeof document === "undefined") {
+      resolve(true);
+    }
     const listener = () => {
       resolve(!document.hidden);
       document.removeEventListener("visibilitychange", listener);
@@ -9,7 +17,7 @@ export function visibilityChange(): Promise<boolean> {
 }
 
 export async function visible() {
-  let result = !document.hidden;
+  let result = !hiddenIfDocExist();
   while (!result) {
     result = await visibilityChange();
   }
@@ -17,7 +25,7 @@ export async function visible() {
 }
 
 export async function hidden() {
-  let result = document.hidden;
+  let result = hiddenIfDocExist();
   while (!result) {
     result = !(await visibilityChange());
   }
